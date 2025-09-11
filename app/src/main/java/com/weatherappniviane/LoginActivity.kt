@@ -31,7 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.weatherappniviane.ui.theme.WeatherAppNivianeTheme
-import com.weatherappniviane.RegisterActivity
+import com.weatherappniviane.ui.theme.WeatherAppNivianeTheme
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,14 +48,18 @@ class LoginActivity : ComponentActivity() {
 }
 
 @SuppressLint("ContextCastToActivity")
-@Preview(showBackground = true)
 @Composable
 fun LoginPage(modifier: Modifier = Modifier) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     val activity = LocalContext.current as? Activity
+
     Column(
-        modifier = modifier.padding(16.dp).fillMaxSize(),
+        modifier = modifier
+            .padding(16.dp)
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = CenterHorizontally
     ) {
         Text(
             text = "Bem-vindo/a!",
@@ -63,31 +67,38 @@ fun LoginPage(modifier: Modifier = Modifier) {
         )
         OutlinedTextField(
             value = email,
-            label = { Text(text = "Digite seu e-mail") }, modifier = modifier.fillMaxWidth(fraction = 0.9f),
+            label = { Text(text = "Digite seu e-mail") },
+            modifier = Modifier.fillMaxWidth(0.9f),
             onValueChange = { email = it }
         )
         OutlinedTextField(
             value = password,
             label = { Text(text = "Digite sua senha") },
-            modifier = modifier.fillMaxWidth(fraction = 0.9f),
+            modifier = Modifier.fillMaxWidth(0.9f),
             onValueChange = { password = it },
             visualTransformation = PasswordVisualTransformation()
         )
-        Row(modifier = modifier) {
+        Row(modifier = Modifier.padding(top = 16.dp)) {
             Button(
                 onClick = {
+                    val activity = null
                     Toast.makeText(activity, "Login OK!", Toast.LENGTH_LONG).show()
                     activity?.startActivity(
                         Intent(activity, MainActivity::class.java).setFlags(
                             Intent.FLAG_ACTIVITY_SINGLE_TOP
                         )
                     )
-                }, enabled = email.isNotEmpty() && password.isNotEmpty()
+                },
+                enabled = email.isNotEmpty() && password.isNotEmpty()
             ) {
                 Text("Login")
             }
             Button(
-                onClick = { email = ""; password = "" }
+                onClick = {
+                    email = ""
+                    password = ""
+                },
+                modifier = Modifier.padding(start = 8.dp)
             ) {
                 Text("Limpar")
             }
@@ -101,6 +112,8 @@ fun LoginPage(modifier: Modifier = Modifier) {
         }
     }
 }
+
+private fun Nothing?.startActivity(flags: Intent) {}
 
 @Preview(showBackground = true)
 @Composable

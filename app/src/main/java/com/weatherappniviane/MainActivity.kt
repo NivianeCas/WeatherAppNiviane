@@ -21,56 +21,58 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.layout.Box
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.*
+import androidx.navigation.compose.rememberNavController
+
+
 import com.weatherappniviane.ui.theme.WeatherAppNivianeTheme
 
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val navController = rememberNavController()
             WeatherAppNivianeTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    HomePage(modifier = Modifier.padding(innerPadding))
-
-
+                Scaffold(
+                    topBar = {
+                        TopAppBar(
+                            title = { Text("Bem-vindo/a!") },
+                            actions = {
+                                IconButton(onClick = { finish() }) {
+                                    Icon(
+                                        imageVector =
+                                            Icons.AutoMirrored.Filled.ExitToApp,
+                                        contentDescription = "Localized description"
+                                    )
+                                }
+                            }
+                        )
+                    },
+                    bottomBar = {
+                        val items = listOf(
+                            BottomNavItem.HomeButton,
+                            BottomNavItem.ListButton,
+                            BottomNavItem.MapButton,
+                        )
+                        BottomNavBar(navController = navController, items)
+                    },
+                    floatingActionButton = {
+                        FloatingActionButton(onClick = { }) {
+                            Icon(Icons.Default.Add, contentDescription = "Adicionar")
+                        }
+                    }
+                ) { innerPadding ->
+                    Box(modifier = Modifier.padding(innerPadding)) {
+                        MainNavHost(navController = navController)
+                    }
                 }
             }
         }
-    }
-}
-
-@SuppressLint("ContextCastToActivity")
-@Composable
-fun HomePage(modifier: Modifier = Modifier) {
-    val activity = LocalContext.current as? Activity
-
-    Column(
-        modifier = modifier
-            .padding(16.dp)
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = "Bem-vindo à Home!",
-            fontSize = 24.sp
-        )
-        Button(
-            onClick = {
-                activity?.finish()
-            },
-            modifier = Modifier
-                .padding(top = 16.dp)
-        ) {
-            Text(text = "Sair")
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun HomePagePreview() {
-    WeatherAppNivianeTheme {
-        HomePage()
     }
 }
