@@ -1,4 +1,4 @@
-//package com.weatherappniviane
+package com.weatherappniviane//package com.weatherappniviane
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
