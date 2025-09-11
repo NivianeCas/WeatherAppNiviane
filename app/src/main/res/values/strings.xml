@@ -8,4 +8,7 @@
     <string name="title_activity_list_page">ListPage</string>
     <string name="title_activity_main_nav_host">MainNavHost</string>
     <string name="title_activity_map_page">MapPage</string>
+    <string name="title_activity_city">City</string>
+    <string name="title_activity_main_view_model">MainViewModel</string>
+    <string name="title_activity_city_dialog">CityDialog</string>
 </resources>

@@ -1,6 +1,5 @@
 package com.weatherappniviane
 
-import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,12 +11,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import com.weatherappniviane.viewmodel.MainViewModel
 
 @Composable
-fun MapPage() {
+fun MapPage(
+    modifier: Modifier = Modifier,
+    viewModel: MainViewModel
+) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(Color.Gray)
             .wrapContentSize(Alignment.Center)

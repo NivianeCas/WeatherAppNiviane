@@ -1,10 +1,7 @@
 package com.weatherappniviane
 
-import android.app.Activity
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -13,11 +10,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import com.weatherappniviane.viewmodel.MainViewModel
 
 @Composable
-fun HomePage() {
+fun HomePage(
+    modifier: Modifier = Modifier,
+    viewModel: MainViewModel
+) {
+    val cityList = viewModel.cities
+
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(Color.Blue)
             .wrapContentSize(Alignment.Center)

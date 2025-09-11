@@ -1,44 +1,31 @@
 package com.weatherappniviane//package com.weatherappniviane
-
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-
-
-import com.weatherappniviane.ui.theme.WeatherAppNivianeTheme
+import com.weatherappniviane.ui.theme.WeatherAppDM2Theme
+import com.weatherappniviane.viewmodel.MainViewModel
 
 class MainActivity : ComponentActivity() {
+
+    private val viewModel: MainViewModel by viewModels()  // Instancia o ViewModel aqui
+
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             val navController = rememberNavController()
-            WeatherAppNivianeTheme {
+            WeatherAppDM2Theme {
                 Scaffold(
                     topBar = {
                         TopAppBar(
@@ -46,9 +33,8 @@ class MainActivity : ComponentActivity() {
                             actions = {
                                 IconButton(onClick = { finish() }) {
                                     Icon(
-                                        imageVector =
-                                            Icons.AutoMirrored.Filled.ExitToApp,
-                                        contentDescription = "Localized description"
+                                        imageVector = Icons.AutoMirrored.Filled.ExitToApp,
+                                        contentDescription = "Sair"
                                     )
                                 }
                             }
@@ -63,13 +49,13 @@ class MainActivity : ComponentActivity() {
                         BottomNavBar(navController = navController, items)
                     },
                     floatingActionButton = {
-                        FloatingActionButton(onClick = { }) {
+                        FloatingActionButton(onClick = { /* TODO */ }) {
                             Icon(Icons.Default.Add, contentDescription = "Adicionar")
                         }
                     }
                 ) { innerPadding ->
                     Box(modifier = Modifier.padding(innerPadding)) {
-                        MainNavHost(navController = navController)
+                        MainNavHost(navController = navController, viewModel = viewModel)
                     }
                 }
             }
