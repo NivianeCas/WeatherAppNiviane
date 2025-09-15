@@ -17,7 +17,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 import com.weatherappniviane.model.ui.theme.WeatherAppNivianeTheme
+
 class RegisterActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,8 +100,19 @@ fun RegisterPage(modifier: Modifier = Modifier) {
         Row {
             Button(
                 onClick = {
-                    Toast.makeText(activity, "Registro OK!", Toast.LENGTH_LONG).show()
-                    activity?.finish()
+                    if (password == password2) {
+                        Firebase.auth.createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(activity!!) { task ->
+                                if (task.isSuccessful) {
+                                    Toast.makeText(activity, "Registro OK!", Toast.LENGTH_LONG).show()
+                                    activity.finish()
+                                } else {
+                                    Toast.makeText(activity, "Registro FALHOU!", Toast.LENGTH_LONG).show()
+                                }
+                            }
+                    } else {
+                        Toast.makeText(activity, "Senhas não coincidem!", Toast.LENGTH_LONG).show()
+                    }
                 },
                 enabled = name.isNotEmpty() && email.isNotEmpty()
                         && password.isNotEmpty() && password2.isNotEmpty()

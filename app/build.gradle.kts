@@ -58,11 +58,14 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.9.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
 
-    // ADD estas dependências do Google Maps (conforme PDF - Passo 8)
     implementation("com.google.android.gms:play-services-maps:19.2.0")
     implementation("com.google.android.gms:play-services-location:21.3.0")
     implementation("com.google.maps.android:maps-compose:2.8.0")
     implementation(libs.firebase.auth)
+        // Firebase Authentication
+    implementation("com.google.firebase:firebase-auth-ktx:22.3.1")
+    implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
