@@ -44,6 +44,7 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainAppContent(viewModel: MainViewModel) {
+    var showDialog by remember { mutableStateOf(false) }
     val navController = rememberNavController()
 
     val currentRoute = navController.currentBackStackEntryAsState()
@@ -89,14 +90,25 @@ fun MainAppContent(viewModel: MainViewModel) {
         },
         floatingActionButton = {
             if (showButton) {
-                FloatingActionButton(onClick = {
-                }) {
+                FloatingActionButton(onClick = { showDialog = true }) {
                     Icon(Icons.Default.Add, contentDescription = "Adicionar")
                 }
             }
         }
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
+            if (showDialog) {
+                CityDialog(
+                    onDismiss = { showDialog = false },
+                    onConfirm = { name ->
+                        if (name.isNotBlank()) {
+                            viewModel.add(name)
+                        }
+                        showDialog = false
+                    }
+                )
+            }
+
             LaunchedEffect(Unit) {
                 val hasPermission = ContextCompat.checkSelfPermission(
                     context,
