@@ -22,7 +22,8 @@ import androidx.navigation.compose.rememberNavController
 import com.weatherappniviane.model.ui.theme.WeatherAppNivianeTheme
 import com.weatherappniviane.viewmodel.MainViewModel
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.compose.runtime.LaunchedEffect
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 
 class MainActivity : ComponentActivity() {
 
@@ -34,7 +35,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             WeatherAppNivianeTheme {
-                // Movi todo o conteúdo para uma Composable function separada
                 MainAppContent(viewModel = viewModel)
             }
         }
@@ -46,31 +46,31 @@ class MainActivity : ComponentActivity() {
 fun MainAppContent(viewModel: MainViewModel) {
     val navController = rememberNavController()
 
-    // Estado da rota atual para controlar visibilidade do FAB
     val currentRoute = navController.currentBackStackEntryAsState()
     val showButton = remember(currentRoute.value) {
         currentRoute.value?.destination?.route == "list"
     }
 
-    // Launcher para solicitação de permissão de localização
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission(),
         onResult = { isGranted ->
-            // Você pode tratar o resultado aqui se necessário
             if (isGranted) {
-                // Permissão concedida
             } else {
-                // Permissão negada
             }
         }
     )
+
+    val context = LocalContext.current
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Bem-vindo/a!") },
                 actions = {
-                    IconButton(onClick = { /* TODO: Implementar logout */ }) {
+                    IconButton(onClick = {
+                        Firebase.auth.signOut()
+                        (context as? ComponentActivity)
+                    }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ExitToApp,
                             contentDescription = "Sair"
@@ -88,10 +88,8 @@ fun MainAppContent(viewModel: MainViewModel) {
             BottomNavBar(navController = navController, items)
         },
         floatingActionButton = {
-            // FAB só aparece na tela de lista
             if (showButton) {
                 FloatingActionButton(onClick = {
-                    // TODO: Abrir diálogo para adicionar cidade
                 }) {
                     Icon(Icons.Default.Add, contentDescription = "Adicionar")
                 }
@@ -99,8 +97,6 @@ fun MainAppContent(viewModel: MainViewModel) {
         }
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
-            // Solicita permissão de localização
-            val context = LocalContext.current
             LaunchedEffect(Unit) {
                 val hasPermission = ContextCompat.checkSelfPermission(
                     context,

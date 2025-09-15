@@ -70,11 +70,6 @@ fun LoginPage(modifier: Modifier = Modifier) {
                 onClick = {
                     if (activity != null) {
                         Toast.makeText(activity, "Login OK!", Toast.LENGTH_LONG).show()
-                        activity.startActivity(
-                            Intent(activity, MainActivity::class.java).setFlags(
-                                Intent.FLAG_ACTIVITY_SINGLE_TOP
-                            )
-                        )
                     }
                 },
                 enabled = email.isNotEmpty() && password.isNotEmpty()
