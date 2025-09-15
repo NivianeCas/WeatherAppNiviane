@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.weatherappniviane">
 
+    <!-- Permissões de localização (DEVEM vir antes da tag application) -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,6 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WeatherAppNiviane">
+
+        <!-- Meta-dados para API key do Google Maps (DEVE estar dentro de application) -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
 
         <activity
             android:name=".RegisterActivity"
@@ -20,6 +29,7 @@
             android:exported="true"
             android:label="Home" />
 
+        <!-- Atividade de login como atividade principal -->
         <activity
             android:name=".LoginActivity"
             android:exported="true"
