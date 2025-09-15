@@ -12,7 +12,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.weatherappniviane.ui.theme.WeatherAppDM2Theme
+import com.weatherappniviane.model.ui.theme.WeatherAppNivianeTheme
 import com.weatherappniviane.viewmodel.MainViewModel
 
 class MainActivity : ComponentActivity() {
@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val navController = rememberNavController()
-            WeatherAppDM2Theme {
+            WeatherAppNivianeTheme {
                 Scaffold(
                     topBar = {
                         TopAppBar(

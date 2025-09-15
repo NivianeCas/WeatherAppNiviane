@@ -17,8 +17,6 @@ fun HomePage(
     modifier: Modifier = Modifier,
     viewModel: MainViewModel
 ) {
-    val cityList = viewModel.cities
-
     Column(
         modifier = modifier
             .fillMaxSize()

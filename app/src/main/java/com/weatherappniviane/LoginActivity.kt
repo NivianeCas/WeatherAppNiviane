@@ -1,6 +1,5 @@
 package com.weatherappniviane
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -8,26 +7,14 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.weatherappniviane.model.ui.theme.WeatherAppNivianeTheme
@@ -46,7 +33,6 @@ class LoginActivity : ComponentActivity() {
     }
 }
 
-@SuppressLint("ContextCastToActivity")
 @Composable
 fun LoginPage(modifier: Modifier = Modifier) {
     var email by rememberSaveable { mutableStateOf("") }
@@ -58,7 +44,7 @@ fun LoginPage(modifier: Modifier = Modifier) {
             .padding(16.dp)
             .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = "Bem-vindo/a!",
@@ -80,13 +66,14 @@ fun LoginPage(modifier: Modifier = Modifier) {
         Row(modifier = Modifier.padding(top = 16.dp)) {
             Button(
                 onClick = {
-                    val activity = null
-                    Toast.makeText(activity, "Login OK!", Toast.LENGTH_LONG).show()
-                    activity?.startActivity(
-                        Intent(activity, MainActivity::class.java).setFlags(
-                            Intent.FLAG_ACTIVITY_SINGLE_TOP
+                    if (activity != null) {
+                        Toast.makeText(activity, "Login OK!", Toast.LENGTH_LONG).show()
+                        activity.startActivity(
+                            Intent(activity, MainActivity::class.java).setFlags(
+                                Intent.FLAG_ACTIVITY_SINGLE_TOP
+                            )
                         )
-                    )
+                    }
                 },
                 enabled = email.isNotEmpty() && password.isNotEmpty()
             ) {
@@ -104,20 +91,11 @@ fun LoginPage(modifier: Modifier = Modifier) {
             Button(
                 onClick = {
                     activity?.startActivity(Intent(activity, RegisterActivity::class.java))
-                }
+                },
+                modifier = Modifier.padding(start = 8.dp)
             ) {
                 Text("Registrar")
             }
         }
-    }
-}
-
-private fun Nothing?.startActivity(flags: Intent) {}
-
-@Preview(showBackground = true)
-@Composable
-fun LoginPagePreview() {
-    WeatherAppNivianeTheme {
-        LoginPage()
     }
 }
