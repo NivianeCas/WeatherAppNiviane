@@ -18,6 +18,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.firebase.auth.auth
 import com.weatherappniviane.model.ui.theme.WeatherAppNivianeTheme
 
 class LoginActivity : ComponentActivity() {
@@ -69,7 +70,31 @@ fun LoginPage(modifier: Modifier = Modifier) {
             Button(
                 onClick = {
                     if (activity != null) {
-                        Toast.makeText(activity, "Login OK!", Toast.LENGTH_LONG).show()
+                        if (email.isNotEmpty() && password.isNotEmpty()) {
+                            com.google.firebase.Firebase.auth
+                                .signInWithEmailAndPassword(email, password)
+                                .addOnCompleteListener(activity) { task ->
+                                    if (task.isSuccessful) {
+                                        Toast.makeText(
+                                            activity,
+                                            "Login realizado com sucesso!",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                        activity.startActivity(
+                                            Intent(activity, MainActivity::class.java).setFlags(
+                                                Intent.FLAG_ACTIVITY_NEW_TASK or
+                                                        Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                            )
+                                        )
+                                    } else {
+                                        Toast.makeText(
+                                            activity,
+                                            "Erro: ${task.exception?.message}",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                    }
+                                }
+                        }
                     }
                 },
                 enabled = email.isNotEmpty() && password.isNotEmpty()
