@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "737175748097",
+    "project_id": "sylvan-surf-472211-h2",
+    "storage_bucket": "sylvan-surf-472211-h2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:737175748097:android:e79e178becdd0f461b8a00",
+        "android_client_info": {
+          "package_name": "com.weatherappniviane"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtlCms2-uolfiC3WHDR9GKj6HLCmZmfSM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
